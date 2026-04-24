@@ -94,7 +94,7 @@ def method_tag(row: dict[str, Any]) -> str:
 
 def build_rows(config_dir: Path, exp_root: Path) -> list[dict[str, Any]]:
     rows: list[dict[str, Any]] = []
-    for config_path in sorted(config_dir.glob("*.yaml")):
+    for config_path in sorted(config_dir.glob("taslp_*.yaml")):
         config = load_yaml(config_path)
         exp_dir_value = str(config.get("exp_dir", "")).strip()
         exp_dir = exp_root / exp_dir_value.replace("exp/", "", 1) if exp_dir_value.startswith("exp/") else exp_root / exp_dir_value

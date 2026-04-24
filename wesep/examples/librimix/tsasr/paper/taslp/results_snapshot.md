@@ -17,6 +17,7 @@ Auto-generated from `confs/taslp/*.yaml` and available `exp/*/infer_*/wer_summar
 | --- | --- | --- | ---: | ---: | ---: | --- |
 | taslp_train100_b0_baseline | b0_baseline | train-100 | - | - | - | - |
 | taslp_train100_b3_full | b3_full | train-100 | - | - | - | - |
+| taslp_train100_full | b3_full | train-100 | 1000 | - | - | - |
 
 ## 3-Speaker Benchmark
 

@@ -11,6 +11,10 @@ TS-ASR TASLP line.
   A draft table skeleton for the main ablation section.
 - `benchmark_table_template.md`
   A draft table skeleton for the matched 2-speaker / 3-speaker benchmarks.
+- `current_round_status.md`
+  A directory-aware progress note for the current TS-ASR round, including
+  official TASLP configs, active log locations, and the latest verified
+  completed pre-experiment.
 
 ## Auto-collection
 
