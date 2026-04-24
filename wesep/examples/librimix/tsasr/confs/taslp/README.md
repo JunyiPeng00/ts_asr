@@ -64,6 +64,7 @@ bash run.sh --config confs/taslp/taslp_trainmerge_b3_full.yaml --stage 4 --stop_
 Batch submission helpers:
 
 ```bash
+bash submit_run_taslp.sh this_round
 bash submit_run_taslp.sh trainmerge_ablation
 bash submit_run_taslp.sh benchmark_2spk
 bash submit_run_taslp.sh benchmark_3spk

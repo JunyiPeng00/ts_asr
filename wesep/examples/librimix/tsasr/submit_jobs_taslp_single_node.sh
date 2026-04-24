@@ -1,4 +1,8 @@
 #!/bin/bash
+# Canonical single-process TASLP launcher for the current single-node benchmark
+# groups. Submit through submit_run_taslp.sh unless you need to manage sbatch
+# arrays manually.
+
 #SBATCH -J TSASR_TASLP_1N
 #SBATCH -p standard-g
 #SBATCH --account=project_465002316

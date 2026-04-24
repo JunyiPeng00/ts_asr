@@ -1,4 +1,7 @@
 #!/bin/bash
+# Compatibility wrapper for the current single-node TASLP benchmark runs.
+# Preferred submit path: bash submit_run_taslp.sh benchmark_3spk
+
 #SBATCH -J TSASR_single_node
 #SBATCH -p standard-g
 #SBATCH --account=project_465002316
@@ -9,36 +12,24 @@
 #SBATCH --time=47:59:00
 #SBATCH --output=log/output_%x_%j.txt
 #SBATCH --error=log/error_%x_%j.txt
-#SBATCH --array=1-2
-#SBATCH --exclude=nid005955
 
+set -euo pipefail
 
-mkdir -p log
+export TASLP_GROUP="${TASLP_GROUP:-benchmark_3spk}"
 
-module purge
-module load LUMI
-module load PyTorch/2.6.0-rocm-6.2.4-python-3.12-singularity-20250404
+case "${TASLP_GROUP}" in
+  benchmark_3spk|train100_full)
+    ;;
+  *)
+    echo "submit_jobs_single_node.sh only forwards TASLP single-node groups." >&2
+    echo "Supported groups: benchmark_3spk, train100_full" >&2
+    echo "Received TASLP_GROUP=${TASLP_GROUP}" >&2
+    exit 1
+    ;;
+esac
 
-export TORCH_DISTRIBUTED_DEBUG=DETAIL
-export NCCL_DEBUG=INFO
-export TORCH_NCCL_ASYNC_ERROR_HANDLING=1
+echo "submit_jobs_single_node.sh is kept as a compatibility wrapper."
+echo "Preferred job script: $(dirname "$0")/submit_jobs_taslp_single_node.sh"
+echo "Forwarding TASLP_GROUP=${TASLP_GROUP}"
 
-configs=(
-    dynatar_qwen_0p6b_trainmerge
-    dynatar_qwen_0p6b_train100
-)
-config=${configs[$SLURM_ARRAY_TASK_ID-1]}
-
-echo "job_id=${SLURM_JOB_ID}"
-echo "job_nodelist=${SLURM_JOB_NODELIST}"
-echo "nnodes=${SLURM_NNODES}"
-echo "config=${config}"
-echo "launcher_mode=single_node_run_sh"
-echo "TORCH_DISTRIBUTED_DEBUG=${TORCH_DISTRIBUTED_DEBUG}"
-echo "NCCL_DEBUG=${NCCL_DEBUG}"
-echo "TORCH_NCCL_ASYNC_ERROR_HANDLING=${TORCH_NCCL_ASYNC_ERROR_HANDLING}"
-
-srun singularity exec "$SIF" bash run.sh \
-    --config "confs/${config}.yaml" \
-    --stage 7 \
-    --stop_stage 7
+exec bash "$(dirname "$0")/submit_jobs_taslp_single_node.sh"

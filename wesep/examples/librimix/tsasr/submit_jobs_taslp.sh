@@ -1,4 +1,8 @@
 #!/bin/bash
+# Canonical distributed TASLP launcher for the current train-merge / train-100
+# experiment groups. Submit through submit_run_taslp.sh unless you need to
+# manage sbatch arrays manually.
+
 #SBATCH -J TSASR_TASLP
 #SBATCH -p standard-g
 #SBATCH --account=project_465002316
@@ -23,6 +27,11 @@ export NCCL_DEBUG="${NCCL_DEBUG:-INFO}"
 export TORCH_NCCL_ASYNC_ERROR_HANDLING="${TORCH_NCCL_ASYNC_ERROR_HANDLING:-1}"
 
 taslp_group="${TASLP_GROUP:-trainmerge_ablation}"
+case "${taslp_group}" in
+  this_round)
+    taslp_group="trainmerge_ablation"
+    ;;
+esac
 run_stage="${RUN_STAGE:-7}"
 stop_stage="${STOP_STAGE:-7}"
 tasks_per_node=8
@@ -46,7 +55,7 @@ case "${taslp_group}" in
     ;;
   *)
     echo "Unsupported TASLP_GROUP for multi-node submit_jobs_taslp.sh: ${taslp_group}" >&2
-    echo "Supported groups: trainmerge_ablation, benchmark_2spk" >&2
+    echo "Supported groups: this_round, trainmerge_ablation, benchmark_2spk" >&2
     exit 1
     ;;
 esac
