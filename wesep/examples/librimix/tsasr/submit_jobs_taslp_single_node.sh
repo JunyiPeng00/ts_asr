@@ -40,7 +40,7 @@ case "${taslp_group}" in
     ;;
   train100_full)
     configs=(
-      dynatar_qwen_0p6b_train100_full
+      taslp/taslp_train100_full
     )
     ;;
   *)

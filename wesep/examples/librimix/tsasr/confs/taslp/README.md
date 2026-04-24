@@ -12,6 +12,10 @@ The main method story is:
 
 The config files are organized into two groups.
 
+For the current full run list, see:
+
+- `confs/taslp/this_round_full_matrix.yaml`
+
 ## 1. Main paper ablations on `train-merge`
 
 - `taslp_trainmerge_b0_baseline.yaml`
@@ -45,6 +49,13 @@ Use these to report the gain on the matched 2-speaker LibriMix setting.
 
 Use these to report the gain on the matched multi-speaker custom setting.
 
+### Single-node full-supervision reference run
+
+- `taslp_train100_full.yaml`
+
+Use this when you want a single-node full-supervision run on `train-100`
+without mixing it into the multi-GPU ablation launcher.
+
 ## Not included here
 
 The following baselines use different scripts or recipe paths and are not
@@ -68,6 +79,7 @@ bash submit_run_taslp.sh this_round
 bash submit_run_taslp.sh trainmerge_ablation
 bash submit_run_taslp.sh benchmark_2spk
 bash submit_run_taslp.sh benchmark_3spk
+bash submit_run_taslp.sh train100_full
 bash submit_run_taslp.sh full_matrix
 ```
 

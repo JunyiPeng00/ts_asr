@@ -1,0 +1,47 @@
+round_name: taslp_current_full_matrix
+default_submit_group: this_round
+default_run_stage: 7
+default_stop_stage: 7
+
+notes:
+  - All configs in this round are kept under confs/taslp.
+  - train-merge is the main paper ablation line.
+  - train-100 and train-3mix-custom are matched benchmark runs.
+  - train100_full is a single-node full-supervision sanity/stability run.
+  - LMDB-backed aux labels must already exist for configs with overlap or router supervision.
+
+groups:
+  trainmerge_ablation:
+    submit_via: bash submit_run_taslp.sh trainmerge_ablation
+    launcher: submit_jobs_taslp.sh
+    configs:
+      - confs/taslp/taslp_trainmerge_b0_baseline.yaml
+      - confs/taslp/taslp_trainmerge_b1_overlap.yaml
+      - confs/taslp/taslp_trainmerge_b2_overlap_tc.yaml
+      - confs/taslp/taslp_trainmerge_b3_full.yaml
+
+  benchmark_2spk:
+    submit_via: bash submit_run_taslp.sh benchmark_2spk
+    launcher: submit_jobs_taslp.sh
+    configs:
+      - confs/taslp/taslp_train100_b0_baseline.yaml
+      - confs/taslp/taslp_train100_b3_full.yaml
+
+  benchmark_3spk:
+    submit_via: bash submit_run_taslp.sh benchmark_3spk
+    launcher: submit_jobs_taslp_single_node.sh
+    configs:
+      - confs/taslp/taslp_train3mix_custom_b0_baseline.yaml
+      - confs/taslp/taslp_train3mix_custom_b3_full.yaml
+
+  train100_full:
+    submit_via: bash submit_run_taslp.sh train100_full
+    launcher: submit_jobs_taslp_single_node.sh
+    configs:
+      - confs/taslp/taslp_train100_full.yaml
+
+recommended_order:
+  - trainmerge_ablation
+  - benchmark_2spk
+  - benchmark_3spk
+  - train100_full
