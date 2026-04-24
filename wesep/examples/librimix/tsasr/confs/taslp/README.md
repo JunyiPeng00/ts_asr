@@ -75,6 +75,7 @@ bash run.sh --config confs/taslp/taslp_trainmerge_b3_full.yaml --stage 4 --stop_
 Batch submission helpers:
 
 ```bash
+bash submit_run_full_matrix.sh
 bash submit_run_taslp.sh this_round
 bash submit_run_taslp.sh trainmerge_ablation
 bash submit_run_taslp.sh benchmark_2spk
@@ -82,6 +83,11 @@ bash submit_run_taslp.sh benchmark_3spk
 bash submit_run_taslp.sh train100_full
 bash submit_run_taslp.sh full_matrix
 ```
+
+`bash submit_run_full_matrix.sh` is the dedicated one-shot launcher for the
+entire current round.
+
+`bash submit_run_taslp.sh full_matrix` remains the equivalent lower-level form.
 
 Override stages when needed:
 
