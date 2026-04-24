@@ -1,0 +1,13 @@
+__pycache__/
+*.py[cod]
+*.so
+.pytest_cache/
+.mypy_cache/
+.DS_Store
+
+wesep/examples/librimix/tsasr/data/
+wesep/examples/librimix/tsasr/exp/
+wesep/examples/librimix/tsasr/qwen_models/
+
+*.log
+core

@@ -1,0 +1,97 @@
+# ----------------------------------------------------------------------
+# Paths and data preparation
+# ----------------------------------------------------------------------
+data: data
+fs: 16k
+min_max: max
+noise_type: clean
+text_dir: ""
+Libri2Mix_dir: /flash/project_465002316/junyi/Libri2Mix
+mix_data_path: /flash/project_465002316/junyi/Libri2Mix/wav16k/max
+num_utts_per_shard: 200
+train360_num_utts_per_shard: 800
+num_threads: 16
+
+# ----------------------------------------------------------------------
+# Model initialization and experiment layout
+# ----------------------------------------------------------------------
+qwen_model_size: 0.6B
+download_model_sizes: 0.6B 1.7B
+qwen_models_dir: /scratch/project_465002316/junyi/tse/ts_asr/wesep/examples/librimix/tsasr/qwen_models
+model_path: ""
+exp_dir: exp/dynatar_qwen_0p6b_shard_train-100
+checkpoint: ""
+gpus: 0,1,2,3
+
+# ----------------------------------------------------------------------
+# Data splits and task setup
+# ----------------------------------------------------------------------
+data_type: shard
+train_split: train-100
+eval_split: dev
+test_split: test
+language: English
+prompt: ""
+silence_seconds: 1.0
+enroll_crop_seconds: 4.0
+
+# ----------------------------------------------------------------------
+# DynaTaR-Qwen encoder structure
+# ----------------------------------------------------------------------
+role_layers: 5
+num_prototypes: 8
+mhfa_heads: 4
+mhfa_compression_dim: 128
+router_hidden_multiplier: 2
+
+# ----------------------------------------------------------------------
+# Optimization and batching
+# global effective batch ~= batch_size * grad_acc * num_gpus
+# ----------------------------------------------------------------------
+batch_size: 4
+eval_batch_size: 1
+grad_acc: 3
+lr: 4e-6
+weight_decay: 0.0
+max_grad_norm: 1.0
+warmup_steps: 10000
+lr_scheduler_type: cosine
+epochs: 1
+max_steps: -1
+gradient_checkpointing: 1
+use_custom_optimizer: 1
+new_module_lr_multiplier: 50.0
+new_module_prefixes: thinker.audio_tower.mhfa_backend,thinker.audio_tower.prototype_projector,thinker.audio_tower.refinement_blocks
+
+# ----------------------------------------------------------------------
+# Data loading
+# ----------------------------------------------------------------------
+num_workers: 4
+prefetch_factor: 2
+pin_memory: 1
+group_by_length: 1
+seed: 42
+max_train_samples: 0
+max_eval_samples: 0
+
+# ----------------------------------------------------------------------
+# Logging, evaluation, and checkpointing
+# ----------------------------------------------------------------------
+log_steps: 10
+eval_steps: 1000
+save_steps: 1000
+save_total_limit: 5
+save_strategy: steps
+eval_strategy: steps
+report_to: tensorboard
+logging_dir: ""
+resume: 0
+resume_from: ""
+
+# ----------------------------------------------------------------------
+# Decoding and test-time inference
+# ----------------------------------------------------------------------
+decode_max_new_tokens: 256
+decode_max_samples: 0
+decode_batch_size: 1
+decode_num_workers: 0

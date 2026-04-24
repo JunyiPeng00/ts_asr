@@ -1,0 +1,92 @@
+data: data
+fs: 16k
+min_max: max
+noise_type: clean
+text_dir: ""
+Libri2Mix_dir: /flash/project_465002316/junyi/Libri2Mix
+mix_data_path: /flash/project_465002316/junyi/Libri2Mix/wav16k/max
+num_utts_per_shard: 200
+train360_num_utts_per_shard: 800
+num_threads: 16
+
+qwen_model_size: 0.6B
+download_model_sizes: 0.6B 1.7B
+qwen_models_dir: /scratch/project_465002316/junyi/tse/ts_asr/wesep/examples/librimix/tsasr/qwen_models
+model_path: ""
+exp_dir: exp/taslp_dqwen_0p6b_train3mix_custom_b3_full
+checkpoint: ""
+gpus: 0
+
+data_type: shard
+train_split: train-3mix-custom
+eval_split: dev
+test_split: test
+language: English
+prompt: ""
+silence_seconds: 1.0
+enroll_crop_seconds: 4.0
+
+role_layers: 5
+num_prototypes: 4
+mhfa_heads: 2
+mhfa_compression_dim: 64
+router_hidden_multiplier: 1
+refinement_variant: lite_unshared
+shared_refinement: 0
+memory_dim: 256
+expert_rank: 64
+num_experts: 3
+refinement_layer_strategy: post_role_all
+enable_overlap_head: 1
+overlap_num_classes: 4
+overlap_loss_weight: 0.10
+enable_target_consistency: 1
+target_consistency_weight: 0.05
+target_consistency_mode: hybrid
+target_consistency_temperature: 0.07
+target_consistency_detach_target: 1
+enable_router_supervision: 1
+router_loss_weight: 0.02
+train_aux_label_manifest: data/clean/train-3mix-custom/aux_label_manifest.jsonl
+eval_aux_label_manifest: ""
+eval_enroll_paths_json: ""
+test_enroll_paths_json: ""
+
+batch_size: 1
+eval_batch_size: 1
+grad_acc: 12
+lr: 4e-6
+weight_decay: 0.0
+max_grad_norm: 1.0
+warmup_steps: 10000
+lr_scheduler_type: cosine
+epochs: 1
+max_steps: -1
+gradient_checkpointing: 1
+use_custom_optimizer: 1
+new_module_lr_multiplier: 50.0
+new_module_prefixes: thinker.audio_tower.mhfa_backend,thinker.audio_tower.prototype_projector,thinker.audio_tower.refinement_blocks,thinker.audio_tower.mix_summary_attn,thinker.audio_tower.mix_summary_proj,thinker.audio_tower.overlap_head
+
+num_workers: 4
+prefetch_factor: 2
+pin_memory: 1
+group_by_length: 1
+seed: 42
+max_train_samples: 0
+max_eval_samples: 0
+
+log_steps: 10
+eval_steps: 1000
+save_steps: 1000
+save_total_limit: 5
+save_strategy: steps
+eval_strategy: steps
+report_to: tensorboard
+logging_dir: ""
+resume: 0
+resume_from: ""
+
+decode_max_new_tokens: 256
+decode_max_samples: 0
+decode_batch_size: 1
+decode_num_workers: 0
